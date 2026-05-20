@@ -1,26 +1,20 @@
 @echo off
 :: ========================================================================
-:: DEFINITIVE WINDOWS KERNEL SCHEDULER & MMCSS ENGINE OVERHAUL
+:: DEFINITIVE WINDOWS KERNEL SCHEDULER OVERHAUL
 :: PRIVILEGE STATE: HARD ENFORCEMENT ON GAME DATA PRIORITY PIPELINES
 :: ========================================================================
 echo Re-architecting Windows Thread Scheduler infrastructure...
 
 :: ------------------------------------------------------------------------
-:: SECTION 2: SYSTEM PROFILE RESPONSE AND NETWORK THROTTLE STRIPPING
+:: SECTION 1: SYSTEM PROFILE RESPONSE
 :: ------------------------------------------------------------------------
-echo [1/2] Bypassing MMCSS network throttling and resource reservation...
-
-:: Hard-kill the 20% CPU reservation loop for background tasks (Forces 100% allocation to game)
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d 0 /f >nul 2>&1
-
-:: Disable network packet throttling during high CPU/Gaming utilization states
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NetworkThrottlingIndex" /t REG_DWORD /d 4294967295 /f >nul 2>&1
+echo [1/2] Bypassing resource reservation...
 
 :: Set global multimedia execution priority to critical
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NoAudioPlaybackBackgroundProcessing" /t REG_DWORD /d 1 /f >nul 2>&1
 
 :: ------------------------------------------------------------------------
-:: SECTION 3: SYSTEM PROFILE TASK HARDIENING (GAMES PRIORITY MATRIX)
+:: SECTION 2: SYSTEM PROFILE TASK HARDIENING (GAMES PRIORITY MATRIX)
 :: ------------------------------------------------------------------------
 echo [2/2] Elevating the "Games" subsystem kernel priority class...
 
