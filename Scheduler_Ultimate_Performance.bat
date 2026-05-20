@@ -33,8 +33,6 @@ reg add "%TaskKey%" /v "Background Only" /t REG_SZ /d "False" /f >nul 2>&1
 echo ========================================================================
 echo WINDOWS SCHEDULER MATRIX DEPLOYED SUCCESSFULLY!
 echo.
-echo - Short, Fixed Processor Quanta active (Eliminated context switch lag).
-echo - System Responsiveness set to 100% allocation (Purged the 20% CPU trap).
 echo - Game Task execution matrix locked to High/Critical profiles.
 echo.
 echo ACTION REQUIRED: Perform a full restart of your machine to initiallize.
