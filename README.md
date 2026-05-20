@@ -3,9 +3,6 @@ Navigate to the script directory, right-click the desired optimization file, and
 Perform a clean system restart to apply all modifications to the active Windows kernel image.
 """
 
-with open("README.md", "w", encoding="utf-8") as f:
-f.write(readme_content.strip())
-
 ```python?code_reference&code_event_index=5
 readme_content = """# 🚀 Windows 11 Ultra-Low Latency Optimization Suite
 
