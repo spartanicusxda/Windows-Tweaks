@@ -1,22 +1,14 @@
 @echo off
 :: ========================================================================
 :: DEFINITIVE WINDOWS KERNEL SCHEDULER & MMCSS ENGINE OVERHAUL
-:: ARCHITECTURE TARGET: SHORT, FIXED CPU QUANTA MAPPING (QUANTUM TUNING)
 :: PRIVILEGE STATE: HARD ENFORCEMENT ON GAME DATA PRIORITY PIPELINES
 :: ========================================================================
 echo Re-architecting Windows Thread Scheduler infrastructure...
 
 :: ------------------------------------------------------------------------
-:: SECTION 1: WIN32 PRIORITY SEPARATION (PROCESSOR QUANTUM CONFIGURATION)
-:: ------------------------------------------------------------------------
-echo [1/3] Injecting Short, Fixed CPU Quanta allocations (Hex 26)...
-:: Bitmask breakdown of 0x26 (38): Short Quanta | Fixed Length | High Foreground Boost
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d 38 /f >nul 2>&1
-
-:: ------------------------------------------------------------------------
 :: SECTION 2: SYSTEM PROFILE RESPONSE AND NETWORK THROTTLE STRIPPING
 :: ------------------------------------------------------------------------
-echo [2/3] Bypassing MMCSS network throttling and resource reservation...
+echo [1/2] Bypassing MMCSS network throttling and resource reservation...
 
 :: Hard-kill the 20% CPU reservation loop for background tasks (Forces 100% allocation to game)
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d 0 /f >nul 2>&1
@@ -30,7 +22,7 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProf
 :: ------------------------------------------------------------------------
 :: SECTION 3: SYSTEM PROFILE TASK HARDIENING (GAMES PRIORITY MATRIX)
 :: ------------------------------------------------------------------------
-echo [3/3] Elevating the "Games" subsystem kernel priority class...
+echo [2/2] Elevating the "Games" subsystem kernel priority class...
 
 set "TaskKey=HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games"
 
@@ -42,7 +34,7 @@ reg add "%TaskKey%" /v "SFIO Priority" /t REG_SZ /d "High" /f >nul 2>&1
 reg add "%TaskKey%" /v "Background Only" /t REG_SZ /d "False" /f >nul 2>&1
 
 :: ------------------------------------------------------------------------
-:: SECTION 4: FLUSH & INITIALIZE
+:: SECTION 3: FLUSH & INITIALIZE
 :: ------------------------------------------------------------------------
 echo ========================================================================
 echo WINDOWS SCHEDULER MATRIX DEPLOYED SUCCESSFULLY!
